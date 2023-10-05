@@ -1,22 +1,13 @@
 # clojure-lab-2
+Implement a function with the parameter <b>f</b> that returns a function, that calculates (numerically) following expression:
 
-A Clojure library designed to ... well, that part is up to you.
+int_a^b(f(t)dt),
+
+using Trapezoidal Rule.
+
+2.1 Optimize function with <b>memoize</b>.
+
+2.2 Optimize function with lazy-seq.
 
 ## Usage
-
-FIXME
-
-## License
-
-Copyright © 2023 FIXME
-
-This program and the accompanying materials are made available under the
-terms of the Eclipse Public License 2.0 which is available at
-http://www.eclipse.org/legal/epl-2.0.
-
-This Source Code may also be made available under the following Secondary
-Licenses when the conditions for such availability set forth in the Eclipse
-Public License, v. 2.0 are satisfied: GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or (at your
-option) any later version, with the GNU Classpath Exception which is available
-at https://www.gnu.org/software/classpath/license.html.
+(integral [<i>function</i>] [<i>range1</i>] [<i>range2</i>])
