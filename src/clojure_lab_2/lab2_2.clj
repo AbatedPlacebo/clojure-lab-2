@@ -1,24 +1,26 @@
 (ns clojure-lab-2.core)
 
-; memoize function cube
-
 (defn cube [x] (* x x x))
 
-(defn sum [term a nxt b]
-  (if (> a b)
-    0
-    (+ (term a)
-       (sum term (nxt a) nxt b))))
+(defn sum-lazy [term a nxt]
+  (lazy-seq
+   (cons (term a) (sum-lazy term (nxt a) nxt))))
 
-(defn lazy_integral [f a b n]
-  (let [h (/ (- b a) n)
+(defn sum-ready-lazy [n h term]
+  (lazy-seq (cons (* ( / h 2) (reduce + (take (+ n 1) (sum-lazy term 0 inc)))) (sum-ready-lazy n h term)))
+  )
+
+(defn lazy-integral [f a b n]
+  (let [h (double (/ (- b a) n))
         yk (fn [k] (f (+ a (* h k))))
         trapezoid-term (fn [k] (*
-                              (cond
-                                (or (= k 0) (= k n)) 1
-                                :else 2)
-                              (yk k)))]
-    (* (/ h 2) ((memoize sum) trapezoid-term 0 inc n))))
+                                (cond
+                                  (or (= k 0) (= k n)) 1
+                                  :else 2)
+                                (yk k)))]
+   (take 1 (sum-ready-lazy n h trapezoid-term))
+    ))
 
+(time (lazy-integral cube 0 3 10))
 (time (integral cube 0 3 100))
-(time (integral #(Math/exp %) 2 6 1000))
+(time (lazy-integral #(Math/exp %) 2 6 100))

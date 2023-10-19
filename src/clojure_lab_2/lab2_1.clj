@@ -19,12 +19,14 @@
                                   (or (= k 0) (= k n)) 1
                                   :else 2)
                                 (yk k)))]
-    (* (/ h 2) (memoize (sum-iterate trapezoid-term 0 inc n)))))
+    (* (/ h 2) ( sum-iterate trapezoid-term 0 inc n))))
 
 (def memoize-integral (memoize integral))
 
+
+(time (integral cube 0 3 100))
+
 (do 
-(time (integral memoize-cube 2 10 10000))
 (time (memoize-integral memoize-cube 1 10 10000))
-(time (integral #(Math/exp %) 1 7 100))
+(time (integral #(Math/exp %) 2 6 100))
 )
